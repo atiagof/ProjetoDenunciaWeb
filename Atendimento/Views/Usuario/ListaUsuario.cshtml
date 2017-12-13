@@ -1,0 +1,37 @@
+﻿@model WebDenunciaSSP.Atendimento.Models.RegistroUsuarioViewModel
+
+<div class="col-md-10" style="margin:auto; float:unset;" ng-controller="RegistroFormController">
+
+    <h2>Lista Usuários</h2>
+    <hr />
+
+    <div style="text-align:left;padding-bottom: 10px;">         
+
+        <a href="@Url.Action("Registro","Usuario")" >
+            <button class="btn btn-lg btn-success" type="button" >
+                <i style="vertical-align: middle;" class="fa fa-plus-circle"></i>
+                <span> Novo Usuário </span>
+            </button>
+        </a>
+        <br /><br />
+
+    </div>
+
+    <div class="Conteudo">
+        <div id="grid" ui-grid="gridOptions" class="grid griddelegacias" ui-grid-auto-resize ui-grid-resize-columns ui-grid-edit ></div>
+        <br />
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right ng-binding">
+            <input type="button" value="Primeira" class="btngrid btngrid_first" ng-disabled="CurrentPageNumber == 1" ng-click="GoToFirstPage()" disabled="disabled">
+            <input type="button" value="Anterior" class="btngrid btngrid_previous" ng-disabled="CurrentPageNumber == 1" ng-click="GoToPreviousPage()" disabled="disabled"> Página:
+            <input type="text" value="1" style="width:3em;" ng-model="PageNumberValue" ng-disabled="TotalPages == 1" class="ng-pristine ng-valid ng-touched"> de {{TotalPages}} ({{TotalResults}} registros)
+            <input type="button" value="Ir" class="btngrid btngrid_changepage" ng-click="GoToPageNumber(PageNumberValue)" ng-disabled="TotalPages == 1">
+            <input type="button" value="Próxima" class="btngrid btngrid_next" ng-click="GoToNextPage()" ng-disabled="TotalPages == 1 || TotalPages <= CurrentPageNumber">
+            <input type="button" value="Última" class="btngrid btngrid_last" ng-click="GoToLastPage()" ng-disabled="TotalPages == 1 || TotalPages <= CurrentPageNumber">
+        </div>
+    </div>
+
+    <br /><br />
+
+</div>
+
+<script type="text/javascript" src="~/App/Usuario/RegistroFormController.js"></script>

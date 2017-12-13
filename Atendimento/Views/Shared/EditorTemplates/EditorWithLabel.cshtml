@@ -1,0 +1,70 @@
+﻿@{
+    Func<ModelMetadata, bool> shouldShow = metadata =>
+    {
+        return metadata.ShowForEdit
+            //&& metadata.ModelType != typeof(System.Data.EntityState)
+            && !metadata.IsComplexType
+            && !ViewData.TemplateInfo.Visited(metadata);
+    };
+
+
+    string ViewModelName = ViewData.ModelMetadata.ContainerType.Name;// ViewData["ViewModelName"] != null ? (string)ViewData["ViewModelName"] : "";
+    string fieldName = ViewData.TemplateInfo.GetFullHtmlFieldId(string.Empty);
+    string fieldId = ViewModelName + (string.IsNullOrEmpty(ViewModelName) ? "" : ".") + fieldName;
+
+    //Default name for forms
+    string FormEntityModel = ViewModelName + "Form." + fieldName;
+    string TemplateName = ViewModelName + fieldName + ".html";
+}
+@if (ViewData.TemplateInfo.TemplateDepth > 1)
+{
+    if (Model == null)
+    {
+        @ViewData.ModelMetadata.NullDisplayText
+    }
+    else
+    {
+        @ViewData.ModelMetadata.SimpleDisplayText
+    }
+}
+else
+{
+
+        <div class="form-group @ViewData["cssclass"]  has-feedback" ng-class="{ 'has-error': @FormEntityModel.$invalid && @FormEntityModel.$touched, 'has-success': @FormEntityModel.$valid && @FormEntityModel.$touched }">
+
+            @if (!ViewData.ModelMetadata.HideSurroundingHtml)
+            {
+
+                //var labelHtml = Html.Label(prop.PropertyName);
+                //if (!string.IsNullOrEmpty(labelHtml.ToHtmlString()))
+                //{
+                    <label for="@fieldId">@ViewData.ModelMetadata.DisplayName</label>  
+                //}
+                        
+            }
+            
+            @Html.Editor(ViewData.ModelMetadata.PropertyName, ViewData.ModelMetadata.DataTypeName)
+
+        </div>
+
+
+
+        @*if (prop.HideSurroundingHtml)
+        {
+            @Html.Editor(prop.PropertyName)
+        }
+        else
+        {
+            var labelHtml = Html.Label(prop.PropertyName);
+            if (!string.IsNullOrEmpty(labelHtml.ToHtmlString()))
+            {
+                <div class="editor-label">
+                    @labelHtml
+                </div>
+            }
+            <div class="editor-field">
+                
+            </div>
+        }*@
+    
+}

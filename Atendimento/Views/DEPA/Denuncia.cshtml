@@ -1,0 +1,215 @@
+﻿@model WebDenunciaSSP.Atendimento.Models.DEPADenunciaViewModel
+    @using WebDenunciaSSP.Atendimento.Extensions
+
+<div class="col-md-10" style="margin:auto; float:unset;" ng-controller="DenunciaFormController">    
+    <input type="hidden" ng-model="ModuleName" ng-init="ModuleName = 'Model.ModuleName'" />
+    <input type="hidden" ng-model="EntityName" ng-init="EntityName = 'Model.EntityName'" />
+    <input type="hidden" ng-model="ModelName" ng-init="ModelName = 'DEPADenunciaViewModel'" />
+
+    <div class="container-fluid">
+        <div class="bootstrap-dialog-body">
+            @using (Html.BeginForm("", "", FormMethod.Post, new { name = @ViewData.ModelMetadata.ModelType.Name + "Form", role = "form" }))
+            {
+                <uib-tabset active="active" type="pills">
+                    <uib-tab index="0">
+                        <uib-tab-heading>
+                            <i class="fa fa-user-plus" style="color:limegreen!important;"></i> 
+                            <span class="hidden-xs">Denunciante</span>
+                        </uib-tab-heading>
+                        <fieldset class="form-group container-fluid success">                            
+                            <h2 class="col-md">Informações do(a) Denunciante</h2>
+                            <hr />
+                            
+                            @*@Html.CustomEditorFor(x => x.teste.Whistleblower.FirsName,      new { @class = "col-md-6", ModelName = "DEPADenunciaViewModel" })*@
+                            @Html.CustomEditorFor(x => x.Denunciante.NomeCompleto, new { cssclass = "col-md-8" })                            
+                            @Html.CustomEditorFor(x => x.Denunciante.Sexo, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciante.TelefoneResidencial, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciante.TelefoneCelular, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciante.Email, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciante.CPF, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciante.RG, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciante.RGUF, new { cssclass = "col-md-4", inputcssclass="text-uppercase" })
+                            @Html.CustomEditorFor(x => x.Denunciante.Naturalidade, new { cssclass = "col-md-12" })
+                            @Html.CustomEditorFor(x => x.Denunciante.DataNascimento, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciante.EstadoCivilId, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciante.Profissao, new { cssclass = "col-md-4" })
+
+                            @Html.CustomEditorFor(x => x.Denunciante.ManterSigiloDados, new { cssclass = "col-md-12" })
+                            <div class="clearfix"></div>
+                            <h2 class="">Endereço do(a) Denunciante</h2>
+                            <hr />
+                            @Html.CustomEditorFor(x => x.Denunciante.Endereco.PostalCode, new { cssclass = "col-md-4" })
+                            <div class="clearfix"></div>
+                            @Html.CustomEditorFor(x => x.Denunciante.Endereco.Street, new { cssclass = "col-md-8" })
+                            @Html.CustomEditorFor(x => x.Denunciante.Endereco.Number, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciante.Endereco.Complement, new { cssclass = "col-md-12" })
+                            @Html.CustomEditorFor(x => x.Denunciante.Endereco.Neighborhood, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciante.Endereco.City, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciante.Endereco.State, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciante.Endereco.Reference, new { cssclass = "col-md-12" })
+
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-lg btn-success"><span> Próximo </span>
+                                <i style="vertical-align: middle;" class="fa fa-2x fa-arrow-circle-o-right"></i> </button>
+                            </div>
+                        </fieldset>                                     
+                    </uib-tab>
+
+                    <uib-tab index="10">
+                        <uib-tab-heading>
+                            <i class="fa fa-user-times danger" style="color:red!important;"></i> 
+                            <span class="hidden-xs">Denunciado(a)</span>
+                        </uib-tab-heading>
+                        <fieldset class="form-group container-fluid">
+                            <h2>Informações do(a) Denunciado(a)</h2>
+                            <hr />
+
+                            @Html.CustomEditorFor(x => x.Denunciado.NomeCompleto, new { cssclass = "col-md-8" })
+                            @Html.CustomEditorFor(x => x.Denunciado.Apelido, new { cssclass = "col-md-4" })
+
+                            <h2 class="">Características do(a) Denunciado(a)</h2>
+                            <hr />
+                            @Html.CustomEditorFor(x => x.Denunciado.Sexo, new { cssclass = "col-md-3" })
+                            @Html.CustomEditorFor(x => x.Denunciado.Idade, new { cssclass = "col-md-3" })
+                            @Html.CustomEditorFor(x => x.Denunciado.Estatura, new { cssclass = "col-md-3" })
+                            @Html.CustomEditorFor(x => x.Denunciado.TipoFisico, new { cssclass = "col-md-3" })
+                            @Html.CustomEditorFor(x => x.Denunciado.CorPele, new { cssclass = "col-md-3" })
+                            @Html.CustomEditorFor(x => x.Denunciado.CorOlhos, new { cssclass = "col-md-3" })
+                            @Html.CustomEditorFor(x => x.Denunciado.CorCabeloId, new { cssclass = "col-md-3" })
+                            @Html.CustomEditorFor(x => x.Denunciado.TipoCabeloId, new { cssclass = "col-md-3" })
+                            @Html.CustomEditorFor(x => x.Denunciado.PossuiCicatrizId, new { cssclass = "col-md-4" })
+
+                            <div ng-show="DEPADenunciaViewModel.Denunciado_PossuiCicatrizId == 1">
+                                @Html.CustomEditorFor(x => x.Denunciado.DescricaoCicatriz, new { cssclass = "col-md-8" })
+                            </div>
+
+                            @Html.CustomEditorFor(x => x.Denunciado.PossuiTatuagem, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Denunciado.DescricaoTatuagem, new { cssclass = "col-md-8" })
+
+                            @Html.CustomEditorFor(x => x.Denunciado.EnderecoDesconhecido, new { cssclass = "col-md-12" })                            
+                            
+                            <div ng-show="!DenunciadoViewModel.Denunciado_EnderecoDesconhecido">
+                                <h2>Endereço do(a) Denunciado</h2>
+                                <hr />
+                                @Html.CustomEditorFor(x => x.Denunciado.Endereco.PostalCode, new { cssclass = "col-md-4" })
+                                <div class="clearfix"></div>
+                                @Html.CustomEditorFor(x => x.Denunciado.Endereco.Street, new { cssclass = "col-md-8" })
+                                @Html.CustomEditorFor(x => x.Denunciado.Endereco.Number, new { cssclass = "col-md-4" })
+                                @Html.CustomEditorFor(x => x.Denunciado.Endereco.Complement, new { cssclass = "col-md-12" })
+                                @Html.CustomEditorFor(x => x.Denunciado.Endereco.Neighborhood, new { cssclass = "col-md-4" })
+                                @Html.CustomEditorFor(x => x.Denunciado.Endereco.City, new { cssclass = "col-md-4" })
+                                @Html.CustomEditorFor(x => x.Denunciado.Endereco.State, new { cssclass = "col-md-4" })
+                                @Html.CustomEditorFor(x => x.Denunciado.Endereco.Reference, new { cssclass = "col-md-12" })
+                            </div>                            
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-lg btn-success ">Adicionar Denunciado(a)</button>
+                            </div>
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-lg btn-success">
+                                    <span> Próximo </span>
+                                    <i style="vertical-align: middle;" class="fa fa-2x fa-arrow-circle-o-right"></i>
+                                </button>
+                            </div>
+                        </fieldset>
+                    </uib-tab>
+
+                    <uib-tab index="20">
+                        <uib-tab-heading>
+                            <i class="fa fa-wpforms"></i> 
+                            <span class="hidden-xs">Ocorrência</span>
+                        </uib-tab-heading>
+                        <fieldset class="form-group container-fluid">
+                            <h2 class="">Informações da Ocorrência</h2>
+                            <hr />
+                            @Html.CustomEditorFor(x => x.Ocorrencia.DataHoraFato, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.TipoCrime, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.TipoEndereco, new { cssclass = "col-md-4" })
+
+                            <h2 class="">Endereço da Ocorrência</h2>
+                            <hr />
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Endereco.PostalCode, new { cssclass = "col-md-4" })
+                            <div class="clearfix"></div>
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Endereco.Street, new { cssclass = "col-md-8" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Endereco.Number, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Endereco.Complement, new { cssclass = "col-md-12" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Endereco.Neighborhood, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Endereco.City, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Endereco.State, new { cssclass = "col-md-4" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Endereco.Reference, new { cssclass = "col-md-12" })
+
+
+                            <h2 class="">Animais</h2>
+                            <hr />
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Animal.Classificacao, new { cssclass = "col-md-6" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Animal.Porte, new { cssclass = "col-md-6" })
+
+                            <h2 class="">Veículo</h2>
+                            <hr />
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Veiculo.TipoVeiculo, new { cssclass = "col-md-6" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Veiculo.Placa, new { cssclass = "col-md-6", inputcssclass = "text-uppercase" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Veiculo.Marca, new { cssclass = "col-md-6" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Veiculo.Modelo, new { cssclass = "col-md-6" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Veiculo.Cor, new { cssclass = "col-md-6" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Veiculo.Observacao, new { cssclass = "col-md-12" })                            
+
+                            <h2 class="">Informações Adicionais</h2>
+                            <hr />
+                            @Html.CustomEditorFor(x => x.Ocorrencia.BORegistrado, new { cssclass = "col-md-6" })
+
+                            @Html.CustomEditorFor(x => x.Ocorrencia.PossibilidadeFuga, new { cssclass = "col-md-6" })                            
+                            @Html.CustomEditorFor(x => x.Ocorrencia.DenunciadoPortaArmaFogo, new { cssclass = "col-md-6" })
+
+                            <h2 class="">Anexos</h2>
+                            <hr />
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Anexo, new { cssclass = "col-md-6" })
+
+                            <h2 class="">Página da Internet</h2>
+                            <hr />
+                            @Html.CustomEditorFor(x => x.Ocorrencia.PaginaWEB, new { cssclass = "col-md-12" })
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Observacao, new { cssclass = "col-md-12" })
+
+                            <h2 class="">Relato</h2>
+                            <hr />
+                            @Html.CustomEditorFor(x => x.Ocorrencia.Relato, new { cssclass = "col-md-12" })
+
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-lg btn-success">
+                                    <i style="vertical-align: middle;" class="fa fa-2x fa-check-circle-o"></i>
+                                    <span> Finalizar </span>                                    
+                                </button>
+                            </div>
+                        </fieldset>
+                    </uib-tab>
+                </uib-tabset>
+            }
+        </div>
+    </div>
+    <div class="modal-footer">
+        @*<div class="container-fluid">
+                <div class="row">
+                    <div class="text-left col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <button type="button" class="btn btn-danger" ng-click="Close()" ng-show="DEPADeninciaForm.$dirty">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            Descartar
+                        </button>
+                        <button type="button" class="btn btn-danger" ng-click="Close()" ng-show="!DEPADeninciaForm.$dirty">
+                            <i class="glyphicon glyphicon-remove"></i>
+                            Fechar
+                        </button>
+                    </div>
+                    <div class="text-right col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <button type="button" class="btn btn-success" ng-click="Save()" ng-disabled="!DEPADeninciaForm.$dirty">
+                            <i class="glyphicon glyphicon-floppy-save"></i>
+                            Salvar
+                        </button>
+                        <button type="button" class="btn btn-success" ng-click="SaveAndClose()" ng-disabled="!DEPADeninciaForm.$dirty">
+                            <i class="glyphicon glyphicon-floppy-save"></i>
+                            Salvar e fechar
+                        </button>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</div>
+
+<script type="text/javascript" src="~/App/DEPA/DenunciaFormController.js"></script>

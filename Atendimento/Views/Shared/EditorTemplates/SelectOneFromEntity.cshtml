@@ -1,0 +1,73 @@
+﻿@model int?
+@using WebDenunciaSSP.CommonLibs.Helper
+@{
+    EditorTemplateConfiguration config = new EditorTemplateConfiguration(ViewData);
+
+    string modelName = config.ModelName;
+    string fieldName = config.FieldName;
+
+    string entityName = string.Empty;
+    string fieldId = config.FieldId;
+
+    //Default name for forms
+    string FormEntityModel = modelName + "Form." + fieldName;
+    string TemplateName = modelName + fieldName + ".html";
+
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("EntityName"))
+    {
+        entityName = ViewData.ModelMetadata.AdditionalValues["EntityName"].ToString();
+    }
+
+    var textField = ViewData.ModelMetadata.AdditionalValues["TextField"] == null ? "Id" : ViewData.ModelMetadata.AdditionalValues["TextField"];
+    var valueField = ViewData.ModelMetadata.AdditionalValues["ValueField"] == null ? "Value" : ViewData.ModelMetadata.AdditionalValues["valueField"];
+
+    var value = "";
+    if (ViewData.Model.HasValue && ViewData.Model.Value > 0)
+    {
+        value = ViewData.Model.Value.ToString();
+    }
+}
+<div class="form-group @ViewData["cssclass"] @(!ViewData.ModelMetadata.IsRequired ? "" : "has-feedback")" ng-class="{ 'has-error': @FormEntityModel.$invalid && @FormEntityModel.$touched && @config.HasValidation.ToString().ToLower(), 'has-success': @FormEntityModel.$valid && @FormEntityModel.$touched && @config.HasValidation.ToString().ToLower() }">
+    <label for="@fieldId">
+        @ViewData.ModelMetadata.DisplayName
+    @if (ViewData.ModelMetadata.IsRequired)
+    {
+        <span style="color:red;">*</span>
+    }
+</label>
+
+<div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <select selectonefromentity id="@fieldId"
+            class="form-control"
+            name="@fieldName"
+            @Html.Raw(config.NgRequired)
+            @Html.Raw(config.NgChange)
+            ng-mouseleave="@FormEntityModel.$MouseOver = false"
+            ng-mouseover="@FormEntityModel.$MouseOver = true"
+            ng-model="@fieldId"
+            ng-init="@fieldId=@("'" + value + "'")"
+            @(ViewData.ModelMetadata.IsRequired ? "required" : "")
+            selectOptions='{ "entityName": "@entityName", "textField" : "@textField", "valueField" : "@valueField"}'></select>
+    @if (ViewData.ModelMetadata.IsRequired)
+    {
+        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="!@FormEntityModel.$pending && @FormEntityModel.$valid && @FormEntityModel.$touched"></span>
+        <span class="glyphicon glyphicon-info-sign form-control-feedback" aria-hidden="true" ng-show="!@FormEntityModel.$pending && @FormEntityModel.$invalid && @FormEntityModel.$touched"></span>
+        <span class="glyphicon glyphicon-refresh form-control-feedback" aria-hidden="true" ng-show="@FormEntityModel.$pending && @FormEntityModel.$touched"></span>
+    }
+</div>
+
+@if (ViewData.ModelMetadata.IsRequired)
+{
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 popoverMessageValidator" ng-show="@FormEntityModel.$touched  && (isMobile || @FormEntityModel.$MouseOver) && @FormEntityModel.$invalid">
+        <div ng-class="{'popover bottom': !isMobile }" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="arrow"></div>
+            @*ToDo: Implementar diversos tipos de validação.*@
+            <div ng-class="{'popover-content': !isMobile }">
+                <div ng-messages="@FormEntityModel.$error" style="color:maroon" role="alert">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><i class="glyphicon glyphicon-info-sign"></i> Campo Obrigatório</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+</div>

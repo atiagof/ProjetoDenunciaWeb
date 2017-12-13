@@ -1,0 +1,36 @@
+﻿@model string
+@{
+    string modelName = ViewData.ModelMetadata.ContainerType.Name;
+    string fieldName = ViewData.TemplateInfo.GetFullHtmlFieldId(string.Empty);
+    string fieldId = modelName + (string.IsNullOrEmpty(modelName) ? "" : ".") + fieldName;
+
+    //Default name for forms
+    string FormEntityModel = modelName + "Form." + fieldName;
+    string TemplateName = modelName + fieldName + ".html";
+}
+<div class="form-group @ViewData["cssclass"] has-feedback" ng-class="{ 'has-error': @FormEntityModel.$invalid && @FormEntityModel.$touched, 'has-success': @FormEntityModel.$valid && @FormEntityModel.$touched }">
+    <label for="@fieldId">@ViewData.ModelMetadata.DisplayName</label>
+    <div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <pre>
+            @*@Html.Raw(ViewData.Model.Replace('\'', '"'))*@
+        </pre>
+        <textarea class="form-control"
+                  ui-codemirror="{lineNumbers: true, indentWithTabs: true}"
+                  ng-class="{ 'has-error': @FormEntityModel.$invalid && @FormEntityModel.$touched, 'has-success': @FormEntityModel.$valid && @FormEntityModel.$touched  }"
+                  id="@fieldId"
+                  name="@fieldName"
+                  @*ng-model="@fieldId"*@
+                  @*ng-init="@fieldId=@Html.Raw(ViewData.Model)"*@
+                  value="@ViewData.Model">
+            @*@Html.Raw(ViewData.Model.Replace('\'', '"'))*@
+             @*@Html.Raw(ViewData.Model)*@
+
+        </textarea>
+    </div>
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("@fieldId"), {
+            lineNumbers: true,
+            styleActiveLine: true            
+        });
+    </script>
+</div>

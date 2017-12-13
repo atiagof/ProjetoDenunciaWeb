@@ -1,0 +1,21 @@
+﻿
+@model string
+@using WebDenunciaSSP.CommonLibs.Helper
+@using System.ComponentModel.DataAnnotations
+@{
+    EditorTemplateConfiguration config = new EditorTemplateConfiguration(ViewData);    
+}
+<div class="form-group @ViewData["cssclass"]">
+    <label for="@config.FieldId">@ViewData.ModelMetadata.DisplayName</label>
+    <div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <input class="form-control"
+               ng-class="{ 'has-error': @(config.Invalid) && @(config.Touched), 'has-success': @(config.Valid) && @(config.Touched)  }"
+               readonly="readonly"
+               id="@config.FieldId"
+               type="text"
+               name="@config.FieldName"
+               ng-model="@config.FieldId"
+               ng-init="@config.FieldId=@("'" + ViewData.Model + "'" )"  
+                />
+    </div>
+</div>

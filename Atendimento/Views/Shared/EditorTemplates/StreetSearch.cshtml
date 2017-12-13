@@ -1,0 +1,53 @@
+﻿@model string
+@using WebDenunciaSSP.CommonLibs.Helper
+@{
+    EditorTemplateConfiguration config = new EditorTemplateConfiguration(ViewData);
+
+    //string modelName = ViewData["modelname"].ToString();
+    //string fieldName = ViewData.TemplateInfo.HtmlFieldPrefix.Replace(".", "_");
+    //string fieldId = modelName + (string.IsNullOrEmpty(modelName) ? "" : ".") + fieldName;
+
+    ////Default name for forms
+    //string FormEntityModel = modelName + "Form." + fieldName;
+    //string TemplateName = modelName + fieldName + ".html";
+    //bool hasValidation = ViewData.ModelMetadata.IsRequired;
+}
+<div class="form-group @ViewData["cssclass"] @(!ViewData.ModelMetadata.IsRequired ? "" : "has-feedback")" ng-class="{ 'has-error': @(config.Invalid) && @(config.Touched) && @config.HasValidation.ToString().ToLower(), 'has-success': @(config.Valid) && @(config.Touched) && @config.HasValidation.ToString().ToLower()}">
+    <label for="@config.FieldId">@ViewData.ModelMetadata.DisplayName</label>
+    <div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @*<span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="@(config.FieldName).opened = !@(config.FieldName).opened"><i class="glyphicon glyphicon-search"></i></button>
+        </span>*@
+        <input class="form-control"
+               ng-class="{ 'has-error': @(config.Invalid) && @(config.Touched), 'has-success': @(config.Valid) && @(config.Touched)  }"
+               id="@config.FieldId"
+               name="@config.FieldName"
+               ng-model="@config.FieldId"
+               ng-init="@config.FieldId=@("'" + ViewData.Model + "'")"
+               type="text"
+               value="@ViewData.Model"
+               @(ViewData.ModelMetadata.IsRequired ? "required" : "")
+               ng-focus="@(config.Focus) = true"
+               ng-blur="@(config.Focus) = false" />
+        @if (config.HasValidation)
+        {
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="!@(config.Pending) && @(config.Valid) && @(config.Touched)"></span>
+            <span class="glyphicon glyphicon-info-sign form-control-feedback" aria-hidden="true" ng-show="!@(config.Pending) && @(config.Invalid) && @(config.Touched)"></span>
+            <span class="glyphicon glyphicon-refresh form-control-feedback" aria-hidden="true" ng-show="@(config.Pending) && @(config.Touched)"></span>
+        }
+    </div>
+    @if (config.HasValidation)
+    {
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 popoverMessageValidator" ng-show="@(config.Touched) && @(config.Invalid) && (isMobile || @(config.Focus))">
+            <div ng-class="{'popover bottom': !isMobile }" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="arrow"></div>
+                @*ToDo: Implementar diversos tipos de validação.*@
+                <div ng-class="{'popover-content': !isMobile }">
+                    <div ng-messages="@(config.Error)" style="color:maroon" role="alert">
+                        <div class="alert alert-danger" role="alert" ng-message="required"><i class="glyphicon glyphicon-info-sign"></i> Campo Obrigatório</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

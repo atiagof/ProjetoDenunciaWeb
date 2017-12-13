@@ -1,0 +1,5 @@
+﻿@model WebDenunciaSSP.CommonLibs.Models.SelectOneFromEntityModel
+<select>
+    <option value="">Selecione...</option>
+    <option ng-repeat="option in @("list" + Model.EntityName)" value="{{option.@Model.ValueField}}">{{option.@Model.TextField}}</option>
+</select>

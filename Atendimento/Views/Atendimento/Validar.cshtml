@@ -1,0 +1,31 @@
+﻿
+<section ng-controller="ctrlValidar">
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
+        <h1><b>VALIDAÇÃO</b></h1>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center; margin-bottom: 20px;" ng-if="listaValidacao == null">
+        <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+        <span style="font-size: 35px;">Carregando lista...</span>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 20px;" ng-if="listaValidacao.length <= 0">
+        <h3>Não há denúncias para serem validadas.</h3>
+    </div>
+
+    <section ng-if="listaValidacao != null && listaValidacao.length > 0">
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <h3>Lista de denúncias para serem analisadas:</h3>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-if="listaValidacao != null && listaValidacao.length > 0" style="margin-bottom: 20px;">
+            <div class="grid" ui-grid="gridValidacao"></div>
+        </div>
+
+    </section>
+
+</section>
+
+<script type="text/javascript" src="~/App/Atendimento/ctrlValidar.js"></script>

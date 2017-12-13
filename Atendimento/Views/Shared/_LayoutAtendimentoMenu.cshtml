@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Layout = null;
+}
+
+<section ng-controller="ctrlMenu">
+    <nav class="navbar navbar-inverse" style="background-color: #336699 !important; border: 0;">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav" ng-if="usuario != null">
+
+                    @if (HttpContext.Current.User.IsInRole("Administrador") ||
+                        HttpContext.Current.User.IsInRole("Administrador Civil") ||
+                        HttpContext.Current.User.IsInRole("Administrador Militar") ||
+                        HttpContext.Current.User.IsInRole("Atendimento Civil") ||
+                        HttpContext.Current.User.IsInRole("Atendimento Militar"))
+                    {
+                        <li><a href="~/Atendimento/Analisar"><i class="fa fa-headphones"></i><span> Atendimento</span></a></li>
+                        <li><a href="~/Atendimento/Validar"><i class="fa fa-check-square-o"></i><span> Validação</span></a></li>
+                    }
+
+                    @if (HttpContext.Current.User.IsInRole("Administrador") ||
+                        HttpContext.Current.User.IsInRole("Administrador Civil") ||
+                        HttpContext.Current.User.IsInRole("Administrador Militar"))
+                    {
+                        <li><a href="~/Atendimento/Descartar"><i class="fa fa-trash-o"></i><span> Descartados</span></a></li>
+                    }
+
+                    @if (HttpContext.Current.User.IsInRole("Administrador") ||
+                        HttpContext.Current.User.IsInRole("Administrador Civil") ||
+                        HttpContext.Current.User.IsInRole("Administrador Militar"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-gear"></i><span> Administração </span><span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li><a href="~/Consulta/DenunciaDashboard"><i class="fa fa-dashboard"></i><span> Dashboard Denúncia</span></a></li>
+                                <li><a href="~/Usuario/ListaUsuario"><i class="fa fa-users"></i><span> Usuários</span></a></li>
+                                @*<li><a href="#"><i class="fa fa-times-circle-o"></i><span> Motivos descarte</span></a></li>
+                                <li><a href="#"><i class="fa fa-exclamation-triangle"></i><span> Respostas</span></a></li>*@
+                            </ul>
+                        </li>
+                    }
+
+                    @if (HttpContext.Current.User.IsInRole("Policia Civil") ||
+                        HttpContext.Current.User.IsInRole("Policia Militar"))
+                    {
+                        <li><a href="~/Apuracao/Apurar"><i class="fa fa-headphones"></i><span> Apuração</span></a></li>
+                    }
+
+                    @if (HttpContext.Current.User.IsInRole("Administrador") ||
+                        HttpContext.Current.User.IsInRole("Administrador Civil") ||
+                        HttpContext.Current.User.IsInRole("Administrador Militar") ||
+                        HttpContext.Current.User.IsInRole("Atendimento Civil") ||
+                        HttpContext.Current.User.IsInRole("Atendimento Militar"))
+                    {
+                        <li class="dropdown">
+                            <a href="~/Consulta/Consultar" class="dropdown-toggle">
+                                <i class="fa fa-search-plus"></i><span> Consulta </span>
+                            </a>
+
+                         
+                        </li>
+                    }
+
+                    <li><a href="~/Usuario/ResetarSenha"><i class="fa fa-user-secret"></i><span> Alterar senha</span></a></li>
+                    <li><a href="#" ng-click="logout()"><i class="fa fa-sign-out"></i><span> Sair</span></a></li>
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-file-archive-o"></i><span> Manuais </span><span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            @*@if (HttpContext.Current.User.IsInRole("Administrador") ||
+                                HttpContext.Current.User.IsInRole("Administrador Civil") ||
+                                HttpContext.Current.User.IsInRole("Administrador Militar") ||
+                                HttpContext.Current.User.IsInRole("Atendimento Civil") ||
+                                HttpContext.Current.User.IsInRole("Atendimento Militar"))
+                            {
+                                <li><a href="~/Manuais/Manual Atendimento.pdf" target="_blank"><i class="fa fa-file-pdf-o"></i><span> Atendimento</span></a></li>
+                            }*@
+                            
+                            <li><a href="~/Manuais/Manual Apuracao.pdf" target="_blank"><i class="fa fa-file-pdf-o"></i><span> Apuração</span></a></li>
+                        </ul>
+                    </li>
+
+                    @if (HttpContext.Current.User.IsInRole("Administrador") ||
+                        HttpContext.Current.User.IsInRole("Administrador Civil") ||
+                        HttpContext.Current.User.IsInRole("Administrador Militar") ||
+                        HttpContext.Current.User.IsInRole("Atendimento Civil") ||
+                        HttpContext.Current.User.IsInRole("Atendimento Militar") ||
+                        HttpContext.Current.User.IsInRole("Policia Civil") ||
+                        HttpContext.Current.User.IsInRole("Policia Militar"))
+                    {
+                        <li>
+                            <p class="navbar-text">
+                                <i class="fa fa-user"></i>
+                                Usuário logado: <span ng-bind="usuario.NOME"></span>
+                            </p>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+
+</section>

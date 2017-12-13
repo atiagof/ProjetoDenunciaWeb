@@ -1,0 +1,47 @@
+﻿@model WebDenunciaSSP.Atendimento.Models.RegistroUsuarioViewModel
+
+    <div class="col-md-10" style="margin:auto; float:unset;" ng-controller="RegistroFormController">
+
+        <h2>Alterar Senha</h2>
+        <hr />
+
+            @using (Html.BeginForm("", "", FormMethod.Post, new { name = @ViewData.ModelMetadata.ModelType.Name + "Form", role = "form" }))
+            {
+
+
+
+                    <div class="clearfix"></div>
+                    <div class="clearfix"></div>
+
+                    @Html.CustomEditorFor(x => x.usuarioID, new { cssclass = "col-md-6" })
+
+                <div class="clearfix"></div>
+
+                    @Html.CustomEditorFor(x => x.NovaSenha, new { cssclass = "col-md-6" })
+                    <div class="clearfix"></div>
+
+                    @Html.CustomEditorFor(x => x.ConfirmaNovaSenha, new { cssclass = "col-md-6" })
+
+
+
+
+                    <div class="clearfix"></div>
+                    <div class="clearfix"></div>
+
+                    <div class="col-md-11 text-center">
+                        <button class="btn btn-lg btn-success" type="button" ng-click="ResetarSenha()" >
+                            <i style="vertical-align: middle;" class="fa fa-check-circle-o"></i>
+                            <span> Salvar </span>
+                        </button>
+                    </div>
+                    }
+
+
+
+
+
+                </div>
+
+
+
+    <script type="text/javascript" src="~/App/Usuario/ResetarSenhaFormController.js"></script>

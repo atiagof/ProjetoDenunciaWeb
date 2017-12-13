@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+    <title>DEPA - Atendimento</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-dialog.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/ui-grid.css" type="text/css" rel="stylesheet" />  
+    <link href="~/Content/bootstrap-switch/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />    
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/angular-block-ui.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-2.2.4.min.js"></script>
+    <script src="~/scripts/jquery.maskedinput.min.js"></script>
+    <script src="~/Scripts/jsTree3/jstree.min.js"></script>
+    <script src="~/scripts/jquery.blockUI.js"></script>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-dialog.js"></script>
+    <script src="~/Scripts/bootstrap-switch.min.js"></script>
+    <script src="~/scripts/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angular-messages.min.js"></script>
+    <script src="~/Scripts/angular-animate.min.js"></script>
+    <script src="~/scripts/angular-cookies.min.js"></script>
+    <script src="~/scripts/angular-block-ui.min.js"></script>
+    <script src="~/scripts/i18n/angular-locale_pt-br.js"></script>
+    <script src="~/scripts/pdfmake/pdfmake.min.js"></script>
+    <script src="~/scripts/pdfmake/vfs_fonts.js"></script>
+
+    <script src="~/Scripts/ui-grid.min.js"></script>
+    <script src="~/Scripts/angular-ui/ui-utils.min.js"></script>
+    <script src="~/Scripts/angular-bootstrap-switch.min.js"></script>
+
+    <script src="~/scripts/angular-ui-tree.js"></script>
+    <link href="~/scripts/angular-ui-tree.css" rel="stylesheet" />
+
+    <script src="~/App/Directives/SelectOneFromEntity.js"></script>
+
+    <script src="~/App/Services/UrlService.js"></script>
+    <script src="~/App/Templates/CustomBootstrap.js"></script>
+
+    <script src="~/Scripts/Site.js"></script>
+    <script src="~/App/App.js"></script>
+    <script src="~/App/ctrlMenu.js"></script>
+    <script src="~/App/Common/BaseListController.js"></script>
+    <script src="~/App/Common/BaseFormController.js"></script>
+
+    <script src="~/scripts/pdfmake/pdfmake.js"></script>
+    <script src="~/scripts/pdfmake/vfs_fonts.js"></script>
+    
+</head>
+
+<body ng-app="SSPApp">
+    <div class="container-fluid">
+        <a class="pull-left navheader cont-left" href="~/">
+            <img class="img-responsive" src="~/images/logoDEPA.svg" style="height: 130px;" />
+        </a>
+        <a class="pull-right navheader cont-right" href="#" style="margin-right: 15px;">
+            <img class="img-responsive" src="~/images/logoSecretaria.png" />
+        </a>
+    </div>
+
+    @Html.Partial("_LayoutAtendimentoMenu")
+
+    <div class="container-fluid flex_content">
+
+        <div class="row">
+            @RenderBody()
+        </div>
+
+    </div>
+    
+    <div class="container-fluid">
+        <div class="row backfooter">
+            <footer class="navfooter cont-center">
+                <img class="img-responsive" src="~/images/logoGTI.png" style="padding-right: 15px;" />
+                <p style="margin: 0; color: white;">
+                    <span>Secretaria de Estado da Segurança Pública - Rua Libero Badaró, 39, Centro, SP - CEP: 01009-000<br />Telefones: (11) 3291-6500. - seguranca@sp.gov.br</span>
+                </p>
+            </footer>
+        </div>
+    </div>
+
+</body>
+
+</html>

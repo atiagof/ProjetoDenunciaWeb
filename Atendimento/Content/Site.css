@@ -1,0 +1,71 @@
+﻿/* Sobrescrevendo padrões */
+.container-fluid { margin-left: 0; margin-right: 0; } /* Devido a propriedade do flex para manter o rodapé colado ao final da página */
+.navbar { border-radius: 0; }
+.navbar-inverse { border: 0; background-color: #336699; }
+.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-text { color: #FFFFFF; }
+.navbar-inverse .navbar-nav > li:hover { background-color: #6f9ecd; }
+.navbar-inverse .navbar-nav > li > a:hover,.navbar-inverse .navbar-nav > li > a:focus { color: #FFFFFF; }
+.topo-bar, .topo-bar > li { min-height: 160px; }
+.navbar-brand topo-bar { min-height: 160px; line-height: 160px;}
+.topo-bar-link { padding-top: 58px; padding-bottom: 58px; }
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus { background-color: #336699; }
+
+
+nav *.dropdown, nav *.dropdown-menu { background-color: #336699; }
+nav *.dropdown:hover { background-color: #6f9ecd !important; }
+nav *.dropdown-menu > li > a { color: #FFFFFF; }
+nav *.dropdown-menu > li:hover { background-color: #6f9ecd; }
+nav *.dropdown-menu > li > a:hover,nav *.dropdown-menu > li > a:focus { background-color: #6f9ecd; color: #FFFFFF; }
+
+/* Conteúdo da página*/
+html, body { display: flex; height: 100%; flex-direction: column; }
+.flex_content { flex: 1 0 auto; }
+a:focus, a:hover { text-decoration: none; }
+.navheader { display: flex; flex-direction: row; min-height: 160px; align-items: center; }
+.navfooter { display: flex; flex-direction: row; min-height: 120px; align-items: center; padding: 10px; }
+.backfooter { background-color: #336699; }
+.cont-center { justify-content: center; }
+.cont-left { justify-content: flex-start; }
+.cont-right { justify-content: flex-end; }
+.denuncia_header { margin: 0; padding-top: 8px; padding-bottom: 8px; }
+
+.info_header { background-color: #eeeeee; color: #333333; padding: 10px 0px 10px 10px; }
+.info_denuncia_header { color: #366696; }
+
+.flexrow { display: flex; flex-direction: row; justify-content: space-between; }
+.noradius { border-radius: 0; }
+.nomargin { margin: 0; }
+
+input, select, textarea, .input-group button { border-radius: 0px!important; }
+
+.expirarOk { background-color: #FFFFFF !important; color: #000000; }
+.expirarWarn { background-color: #EEDD22 !important; color: #000000; }
+.expirado { background-color: #F62C29 !important; color: #FFFFFF; }
+
+/*label span.form-control-feedback {
+    line-height: normal;
+    position: static;
+    top: initial;
+    float: right;
+}*/
+
+.popoverMessageValidator
+{
+    position: absolute;
+    min-width: 230px;
+}
+
+.popoverMessageValidator > .popover {
+    display:inline;
+}
+
+.popoverMessageValidator.alert {
+    padding: 5px;
+}
+
+/*.form-group label 
+{
+    margin-left: 5px!important;
+    font-weight:100;
+    font-size: 13px;
+}*/

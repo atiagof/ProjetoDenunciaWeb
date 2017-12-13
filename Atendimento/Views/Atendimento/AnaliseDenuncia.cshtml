@@ -1,0 +1,663 @@
+﻿
+<section ng-controller="ctrlAnaliseDenuncia">
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
+        <h1><b>ATENDIMENTO</b></h1>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center; margin-bottom: 20px;" ng-if="denuncia == null || vazio == null">
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <span style="font-size: 35px;">Carregando denúncia...</span>
+    </div>
+
+    <section ng-if="vazio" class="info-box">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
+            <i class="fa fa-exclamation-triangle fa-5x fa-fw" style="color: #d43f3a;"></i><br />
+            <span style="font-size: 24px;">Denúncia não encontrada!</span>
+        </div>
+    
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:center; margin-top: 20px; margin-bottom: 20px;">
+            <button type="button" class="btn btn-primary" style="width: 200px; margin-right: 15px; margin-left: 15px;" ng-click="retornar()">
+                <img src="~/images/icones/icone_pata.svg" style="width: 27px; height: 28px; margin-right: 5px;" /> VOLTAR
+            </button>
+        </div>
+    </section>
+
+    <section ng-if="!vazio && denuncia != null">
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <h3 class="pull-left denuncia_header">Analisando a Denúncia - D{{numero}}{{ano}}</h3>
+            <button type="button" class="btn btn-danger fa fa-2x fa-file-pdf-o pull-right" ng-click="exportar()"></button>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center; margin-bottom: 40px; font-size: 20px;">
+            <h2 style="color: #FF3333;">ATENÇÃO</h2>
+            <b style="color: #FF3333;">
+                O denunciante
+                <span ng-if="denuncia.denunciante.sigilo == 'Sim'"> OPTOU </span>
+                <span ng-if="denuncia.denunciante.sigilo == 'Não'"> NÃO OPTOU</span>
+                pelo sigilo dos seus dados pessoais!
+            </b>
+        </div>
+    
+        @* Dados da ocorrência *@
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <a class="" role="button" data-toggle="collapse" href="#dadoDenuncia" aria-expanded="false" aria-controls="dadoDenuncia">
+                <h3 class="info_header">
+                    <i class="fa fa-caret-right iconDenuncia"></i>
+                    <span> Ocorrência</span>
+                </h3>
+            </a>
+
+            <div class="row collapse" id="dadoDenuncia">
+
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">
+                    <b>Data do fato:</b> <span ng-bind="denuncia.data_ocorrencia"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">
+                    <b>Hora aproximada:</b> <span ng-bind="denuncia.periodo"></span>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <b>Tipo do crime:</b> 
+                    <span ng-bind="denuncia.tipo_crime"></span>
+                    <span ng-if="denuncia.flag_tipo_crime"> - {{denuncia.outro_tipo_crime}}</span>
+                </div>
+
+                <section ng-repeat="animal in denuncia.animais">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <b>Classificação do animal:</b> <span ng-bind="animal.descricao"></span>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <b>Quantidade:</b> <span ng-bind="animal.quantidade"></span>
+                    </div>
+                </section>
+                <div class="clearfix"></div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <b>Relato do fato:</b> <span ng-bind="denuncia.relato"></span>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h4 class="info_denuncia_header">Endereço</h4>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">
+                    <b>Tipo de endereço:</b> <span ng-bind="denuncia.tipo_endereco"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">
+                    <b>CEP:</b> <span ng-bind="denuncia.cep"></span>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-4 col-xs-8">
+                    <b>Endereço:</b> <span ng-bind="denuncia.endereco"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                    <b>Número:</b> <span ng-bind="denuncia.endereco_numero"></span>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-8">
+                    <b>Complemento:</b> <span ng-bind="denuncia.complemento"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-4">
+                    <b>Bairro:</b> <span ng-bind="denuncia.bairro"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                    <b>Cidade:</b> <span ng-bind="denuncia.cidade"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
+                    <b>Estado:</b> <span ng-bind="denuncia.estado"></span>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <b>Ponto de referência:</b> <span ng-bind="denuncia.endereco_referencia"></span>
+                </div>
+
+                <div class="clearfix"></div>
+                <section ng-repeat="veiculo in denuncia.veiculos">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h4 class="info_denuncia_header">Veículo {{$index + 1}}</h4>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                        <b>Tipo do veículo:</b> <span ng-bind="veiculo.tipo_veiculo"></span>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                        <b>Número da placa:</b> <span ng-bind="veiculo.placa"></span>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
+                        <b>Marca:</b> <span ng-bind="veiculo.marca"></span>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <b>Cor:</b> <span ng-bind="veiculo.cor_veiculo"></span>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                        <b>Modelo:</b> <span ng-bind="veiculo.modelo"></span>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <b>Observações:</b> <span ng-bind="veiculo.observacoes"></span>
+                    </div>
+                </section>
+
+                <div class="clearfix"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h4 class="info_denuncia_header">Informações adicionais</h4>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <b>Foi registrado um Boletim de ocorrência?</b> <span ng-bind="denuncia.flag_boletim"></span>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <b>O denunciado porta arma de fogo?</b> <span ng-bind="denuncia.flag_porte_arma"></span>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <b>Há possibilidade de ocorrer fuga do local onde o denunciado se encontra?</b> 
+                    <span ng-bind="denuncia.local_fuga"></span>
+                    <span ng-if="denuncia.flag_local_fuga"> - {{denuncia.descricao_local_fuga}}</span>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h4 class="info_denuncia_header">Anexos</h4>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-if="denuncia.anexos.length <= 0">
+                    Nenhum anexo foi adicionado nesta denúncia.
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-if="denuncia.anexos.length > 0">
+                    <div class="row">
+
+                        <div class="col-md-4" ng-repeat="anexo in denuncia.anexos" style="margin-bottom: 10px;">
+                            <div class="thumbnail noradius nomargin">
+
+                                <div class="caption">
+                                    <h4>{{anexo.original}}</h4>
+                                    <div class="flexrow" ng-if="anexo.preview">
+                                        <button type="button" class="btn btn-primary" ng-click="exibirAnexo(anexo)">
+                                            Visualizar
+                                        </button>
+                                        <button type="button" class="btn btn-primary" ng-click="baixarAnexo(anexo)">
+                                            Download
+                                        </button>
+                                    </div>
+                                    <div class="text-right" ng-if="!anexo.preview">
+                                        <button type="button" class="btn btn-primary" ng-click="baixarAnexo(anexo)">
+                                            Download
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                <section ng-repeat="link in denuncia.links">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h4 class="info_denuncia_header">Internet {{$index + 1}}</h4>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <b>Página da internet:</b> <span ng-bind="link.endereco"></span>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <b>Observações:</b> <span ng-bind="link.observacoes"></span>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        @* Dados do denunciante *@
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <a class="" role="button" data-toggle="collapse" href="#dadoDenunciante" aria-expanded="false" aria-controls="dadoDenunciante">
+                <h3 class="info_header">
+                    <i class="fa fa-caret-right iconDenunciante"></i>
+                    <span> Denunciante</span>
+                </h3>
+            </a>
+
+            <div class="row collapse" id="dadoDenunciante">
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h4 class="info_denuncia_header">Informações do(a) Denunciante</h4>
+                </div>
+
+                @*<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <b>O denunciante desejou manter os seus dados pessoais em sigilo?</b> <span ng-bind="denuncia.denunciante.sigilo"></span>
+                </div>*@
+
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-8">
+                    <b>Nome:</b> <span ng-bind="denuncia.denunciante.nome"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-4">
+                    <b>Sexo:</b> <span ng-bind="denuncia.denunciante.sexo"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-6">
+                    <b>Telefone fixo:</b> <span ng-bind="denuncia.denunciante.tel_residencial"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-6">
+                    <b>Telefone celular:</b> <span ng-bind="denuncia.denunciante.tel_celular"></span>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <b>Endereço de e-mail:</b> <span ng-bind="denuncia.denunciante.email"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-4">
+                    <b>CPF:</b> <span ng-bind="denuncia.denunciante.CPF"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+                    <b>RG:</b> <span ng-bind="denuncia.denunciante.RG"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+                    <b>UF emissor:</b> <span ng-bind="denuncia.denunciante.RG_UF"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                    <b>Naturalidade:</b> <span ng-bind="denuncia.denunciante.naturalidade"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-3">
+                    <b>Data de nascimento:</b> <span ng-bind="denuncia.denunciante.data_nascimento"></span>
+                </div>
+
+                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-3">
+                    <b>Estado civil:</b> <span ng-bind="denuncia.denunciante.estado_civil"></span>
+                </div>
+
+                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-6">
+                    <b>Profissão:</b> <span ng-bind="denuncia.denunciante.profissao"></span>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h4 class="info_denuncia_header">Endereço</h4>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+                    <b>CEP:</b> <span ng-bind="denuncia.denunciante.CEP"></span>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                    <b>Endereço:</b> <span ng-bind="denuncia.denunciante.endereco"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+                    <b>Número:</b> <span ng-bind="denuncia.denunciante.numero"></span>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <b>Complemento:</b> <span ng-bind="denuncia.denunciante.complemento"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                    <b>Bairro:</b> <span ng-bind="denuncia.denunciante.bairro"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                    <b>Cidade:</b> <span ng-bind="denuncia.denunciante.cidade"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                    <b>Estado:</b> <span ng-bind="denuncia.denunciante.estado"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-8 col-xs-8">
+                    <b>Ponto de referência:</b> <span ng-bind="denuncia.denunciante.referencia"></span>
+                </div>
+                
+            </div>
+        </div>
+
+        @* Dados do denunciado *@
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-repeat="denunciado in denuncia.denunciados">
+            <a class="" role="button" data-toggle="collapse" href="#dadoDenunciado{{$index}}" aria-expanded="false" aria-controls="dadoDenunciado{{$index}}">
+                <h3 class="info_header">
+                    <i class="fa fa-caret-right iconDenunciado{{$index}}"></i>
+                    <span> Denunciado {{$index + 1}}</span>
+                </h3>
+            </a>
+
+            <div class="row collapse" id="dadoDenunciado{{$index}}">
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <b>Nome:</b> <span ng-bind="denunciado.nome"></span>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <b>Apelido:</b> <span ng-bind="denunciado.apelido"></span>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h4 class="info_denuncia_header">Características</h4>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                    <b>Sexo:</b> <span ng-bind="denunciado.sexo"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                    <b>Idade:</b> <span ng-bind="denunciado.idade"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                    <b>Estatura:</b> <span ng-bind="denunciado.estatura"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                    <b>Tipo físico:</b> <span ng-bind="denunciado.tipo_fisico"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                    <b>Cor da pele:</b> <span ng-bind="denunciado.cor_pele"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                    <b>Cor dos olhos:</b> <span ng-bind="denunciado.cor_olhos"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                    <b>Tipo de cabelo:</b> <span ng-bind="denunciado.tipo_cabelo"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6" ng-if="denunciado.flag_tipo_cabelo">
+                    <b>Descrição do tipo de cabelo:</b> <span ng-bind="denunciado.desc_tipo_cabelo"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                    <b>Cor do cabelo:</b> <span ng-bind="denunciado.cor_cabelo"></span>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6" ng-if="denunciado.flag_cor_cabelo">
+                    <b>Descrição da cor do cabelo:</b> <span ng-bind="denunciado.desc_cor_cabelo"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+                    <b>Tem cicatriz?</b> <span ng-bind="denunciado.cicatriz"></span>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-9 col-xs-8" ng-if="denunciado.flag_cicatriz">
+                    <b>Descrição cicatriz:</b> <span ng-bind="denunciado.desc_cicatriz"></span>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+                    <b>Tem tatuagem?</b> <span ng-bind="denunciado.tatuagem"></span>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-9 col-xs-8" ng-if="denunciado.flag_tatuagem">
+                    <b>Descrição tatuagem:</b> <span ng-bind="denunciado.desc_tatuagem"></span>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h4 class="info_denuncia_header">Endereço</h4>
+                </div>
+
+                <section ng-if="!denunciado.flag_endereco">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">
+                        <b>Endereço não foi informado</b>
+                    </div>
+                </section>
+
+                <section ng-if="denunciado.flag_endereco">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">
+                        <b>Tipo de endereço:</b> <span ng-bind="denunciado.tipo_endereco"></span>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">
+                        <b>CEP:</b> <span ng-bind="denunciado.CEP"></span>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-4 col-xs-8">
+                        <b>Endereço:</b> <span ng-bind="denunciado.endereco"></span>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                        <b>Número:</b> <span ng-bind="denunciado.numero"></span>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-8">
+                        <b>Complemento:</b> <span ng-bind="denunciado.complemento"></span>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-4">
+                        <b>Bairro:</b> <span ng-bind="denunciado.bairro"></span>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                        <b>Cidade:</b> <span ng-bind="denunciado.cidade"></span>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
+                        <b>Estado:</b> <span ng-bind="denunciado.estado"></span>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <b>Ponto de referência:</b> <span ng-bind="denunciado.referencia"></span>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        @* Preenchimento do encaminhamento *@
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <a class="" role="button" data-toggle="collapse" href="#dadoEncaminhar" aria-expanded="false" aria-controls="dadoEncaminhar">
+                <h3 class="info_header">
+                    <i class="fa fa-caret-right iconEncaminhar"></i>
+                    <span> Encaminhamento</span>
+                </h3>
+            </a>
+
+            <div class="row collapse" id="dadoEncaminhar">
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <b>Atendente que está analisando a denúncia:</b> <span ng-bind="denuncia.usuario_atendimento"></span>
+                </div>
+
+                <section ng-if="denuncia.status == 'Reativada'">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <b>Atendente que reativou a denúncia:</b> <span ng-bind="denuncia.usuario_reativo"></span>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <b>Justificativa da reativação:</b> <span ng-bind="denuncia.just_reativo"></span>
+                    </div>
+                </section>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label>Unidade policial:</label>
+                        <select name="selOrgao" class="form-control" ng-disabled="denuncia.id_orgao > 0" ng-readonly="denuncia.id_orgao > 0" ng-options="opcao.ID_ORGAO as opcao.NOME_ORGAO for opcao in orgaos" ng-model="encOrgao.ID"></select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:center; margin-top: 20px; margin-bottom: 20px;">
+            <button type="button" class="btn btn-primary" style="width: 200px; margin-right: 15px; margin-left: 15px;" ng-click="retornar()">
+                <img src="~/images/icones/icone_pata.svg" style="width: 27px; height: 28px; margin-right: 5px;" /> VOLTAR
+            </button>
+            <button type="button" class="btn btn-danger" style="width: 200px; margin-right: 15px; margin-left: 15px;" data-toggle="modal" data-target="#descModal">
+                <img src="~/images/icones/icone_pata.svg" style="width: 27px; height: 28px; margin-right: 5px;" /> DESCARTAR
+            </button>
+            <button type="button" class="btn btn-success" style="width: 200px; margin-right: 15px; margin-left: 15px;" ng-click="verificarEncaminhamento()">
+                <img src="~/images/icones/icone_pata.svg" style="width: 27px; height: 28px; margin-right: 5px;" /> ENCAMINHAR
+            </button>
+        </div>
+    </section>
+
+    <section>
+
+        @* Modal Inconsistência Encaminhamento *@
+        <div class="modal fade" id="checkEnc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Inconsistências na Denúncia - D{{numero}}{{ano}}</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Foram encontradas inconsistências que impede a ação que está sendo tomada, verifique as informações abaixo e tome uma decisão.</p>
+
+                        <div class="form-group">
+                            <b>Usuário que está analisando a denúncia:</b> <span ng-bind="denuncia.usuario_atendimento"></span>
+                        </div>
+
+                        <p>Caso o atendente não esteja presente, é possível forçar o encaminhamento da denúncia</p>
+
+                        <p><b><span style="color: red;">ATENÇÃO</span>:</b> caso o encaminhamento seja executado, a denúncia será atribuída para o usuário logado!</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" style="width: 200px; margin-right: 8px; margin-left: 8px;" data-dismiss="modal">
+                            <img src="~/images/icones/icone_pata.svg" style="width: 27px; height: 28px; margin-right: 5px;" /> CANCELAR
+                        </button>
+                        <button type="button" class="btn btn-danger" style="width: 200px; margin-left: 8px;" ng-click="encaminharDenuncia()">
+                            <img src="~/images/icones/icone_pata.svg" style="width: 27px; height: 28px; margin-right: 5px;" /> ENCAMINHAR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* Modal Inconsistência Descarte *@
+        <div class="modal fade" id="checkDesc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Inconsistências na Denúncia - D{{numero}}{{ano}}</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Foram encontradas inconsistências que impede a ação que está sendo tomada, verifique as informações abaixo e tome uma decisão.</p>
+
+                        <div class="form-group">
+                            <b>Usuário que está analisando a denúncia:</b> <span ng-bind="denuncia.usuario_atendimento"></span>
+                        </div>
+
+                        <p>Caso o atendente não esteja presente, é possível forçar o descarte da denúncia</p>
+
+                        <p><b><span style="color: red;">ATENÇÃO</span>:</b> caso o descarte seja executado, a denúncia será atribuída para o usuário logado!</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" style="width: 150px; margin-right: 8px; margin-left: 8px;" data-dismiss="modal">
+                            <img src="~/images/icones/icone_pata.svg" style="width: 27px; height: 28px; margin-right: 5px;" /> CANCELAR
+                        </button>
+                        <button type="button" class="btn btn-danger" style="width: 150px; margin-left: 8px;" ng-click="descartarDenuncia()">
+                            <img src="~/images/icones/icone_pata.svg" style="width: 27px; height: 28px; margin-right: 5px;" /> DESCARTAR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* Modal Justificativa Descarte *@
+        <div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Justificar descarte - D{{numero}}{{ano}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Para descartar a denúncia, por favor justifique o motivo do descarte no campo abaixo:</p>
+
+                        @*<div class="form-group">
+                            <label>Motivo:</label>
+                            <select name="selOrgao" class="form-control" ng-model="motivo.descricao" ng-change="selMotivo()">
+                                <option value="A denúncia foi descartada por falta de informações">TESTE 1</option>
+                                <option value="A denúncia foi descartada por inconsistência de informações">TESTE 2</option>
+                                <option value="A denúncia foi descartada por se tratar de um trote">TESTE 3</option>
+                            </select>
+                        </div>*@  
+
+                        <div class="form-group">
+                            <label>Justificativa:</label>
+                            <textarea class="form-control" ng-model="descarte" placeholder="Descreva o motivo do descarte..." rows="6" ng-change="checarMotivo()"></textarea>
+                            <span ng-bind="descarte.length"></span>/<span ng-bind="lim_descarte"></span><span> caracteres</span>
+                        </div>                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" style="width: 150px; margin-right: 8px; margin-left: 8px;" data-dismiss="modal">
+                            <img src="~/images/icones/icone_pata.svg" style="width: 27px; height: 28px; margin-right: 5px;" /> FECHAR
+                        </button>
+                        <button type="button" class="btn btn-danger" style="width: 150px; margin-left: 8px;" ng-click="verificarDescarte()">
+                            <img src="~/images/icones/icone_pata.svg" style="width: 27px; height: 28px; margin-right: 5px;" /> DESCARTAR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* Modal Anexo *@
+        <div class="modal fade" id="anexoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Visualizando anexo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>{{anexo_modal.original}}</h4>
+
+                        @* Checar se é video ou imagem e exibir de acordo *@
+                        <img class="img-responsive" ng-src="~/{{anexo_modal.descricao}}" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" style="width: 150px; margin-right: 8px; margin-left: 8px;" data-dismiss="modal">
+                            <img src="~/images/icones/icone_pata.svg" style="width: 27px; height: 28px; margin-right: 5px;" /> FECHAR
+                        </button>
+                        <button type="button" class="btn btn-danger" style="width: 150px; margin-left: 8px;" ng-click="baixarAnexo(anexo_modal)">
+                            <img src="~/images/icones/icone_pata.svg" style="width: 27px; height: 28px; margin-right: 5px;" /> DOWNLOAD
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</section>
+
+</section>
+
+<script type="text/javascript" src="~/App/Atendimento/ctrlAnaliseDenuncia.js"></script>
+
+<script type="text/javascript">
+    collapseEvent('#dadoDenunciante', '.iconDenunciante');
+    collapseEvent('#dadoDenuncia', '.iconDenuncia');
+    collapseEvent('#dadoDenunciado0', '.iconDenunciado0');
+    collapseEvent('#dadoDenunciado1', '.iconDenunciado1');
+    collapseEvent('#dadoDenunciado2', '.iconDenunciado2');
+    collapseEvent('#dadoEncaminhar', '.iconEncaminhar');
+</script>

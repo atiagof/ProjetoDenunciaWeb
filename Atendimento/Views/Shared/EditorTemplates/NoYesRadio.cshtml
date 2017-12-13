@@ -1,0 +1,63 @@
+﻿@model bool?
+@using WebDenunciaSSP.CommonLibs.Helper
+@{
+    EditorTemplateConfiguration config = new EditorTemplateConfiguration(ViewData);
+}
+<div class="form-group @ViewData["cssclass"] @(!ViewData.ModelMetadata.IsRequired ? "" : "has-feedback")"      
+     ng-class="{ 'has-error': @(config.Form).$invalid && @(config.Form).$touched && @config.HasValidation.ToString().ToLower(), 'has-success': @(config.Form).$valid && @(config.Form).$touched && @config.HasValidation.ToString().ToLower() }">
+    <label style="font-weight: bold; font-size: 14px;">
+        @ViewData.ModelMetadata.DisplayName
+        @if (ViewData.ModelMetadata.IsRequired)
+        {
+            <span style="color:red;">*</span>
+            @*if (config.HasValidation)
+                {
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="!@(config.Pending) && @(config.Valid) && @(config.Touched)"></span>
+                    <span class="glyphicon glyphicon-info-sign form-control-feedback" aria-hidden="true" ng-show="!@(config.Pending) && @(config.Invalid) && @(config.Touched)"></span>
+                    <span class="glyphicon glyphicon-refresh form-control-feedback" aria-hidden="true" ng-show="@(config.Pending) && @(config.Touched)"></span>
+                }*@
+        }
+    </label>
+    <div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="radio-inline"
+             ng-mouseleave="@(config.Form).$MouseOver = false"
+            ng-mouseover="@(config.Form).$MouseOver = true">
+            <label class="radio-inline">
+                <input type="radio"
+                       id="@config.FieldId"
+                       name="@config.FieldName"
+                       @Html.Raw(config.NgRequired)
+                       value="true"
+                       @Html.Raw(ViewData.ModelMetadata.IsRequired ? "ng-required='true'" : "")
+                       ng-model="@config.FieldId" /> Sim
+
+            </label>
+            <label class="radio-inline">
+                <input type="radio"
+                       id="@config.FieldId"
+                       value="false"
+                       @Html.Raw(config.NgChange)
+                       @Html.Raw(config.NgRequired)
+                       @Html.Raw(ViewData.ModelMetadata.IsRequired ? "ng-required='true'" : "")
+                       name="@config.FieldName"
+                       ng-model="@config.FieldId"  /> Não
+            </label>
+
+        </div>
+    </div>
+
+    @if (ViewData.ModelMetadata.IsRequired)
+    {
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 popoverMessageValidator" ng-show="@(config.Form).$touched  && (isMobile || @(config.Form).$MouseOver) && @(config.Form).$invalid">
+            <div ng-class="{'popover bottom': !isMobile }" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="arrow"></div>
+                @*ToDo: Implementar diversos tipos de validação.*@
+                <div ng-class="{'popover-content': !isMobile }">
+                    <div ng-messages="@(config.Form).$error" style="color:maroon" role="alert">
+                        <div class="alert alert-danger" role="alert" ng-message="required"><i class="glyphicon glyphicon-info-sign"></i> Campo Obrigatório</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

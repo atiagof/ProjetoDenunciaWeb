@@ -1,0 +1,15 @@
+﻿<div>
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <!-- required for floating -->
+        <ul class="nav nav-{{tabset.type || 'tabs'}} tabs-left " ng-class="{'nav-stacked': vertical, 'nav-justified' : justified}" ng-transclude></ul>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+        <div class="tab-content ">
+            <div class="tab-pane"
+                 ng-repeat="tab in tabset.tabs"
+                 ng-class="{active: tabset.active===tab.index}"
+                 uib-tab-content-transclude="tab">
+            </div>
+        </div>
+    </div>
+</div>

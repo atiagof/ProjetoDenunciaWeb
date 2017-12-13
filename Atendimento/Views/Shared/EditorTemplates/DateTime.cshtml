@@ -1,0 +1,74 @@
+﻿@model DateTime?
+@using WebDenunciaSSP.CommonLibs.Helper
+@{
+    EditorTemplateConfiguration config = new EditorTemplateConfiguration(ViewData);
+    string modelName = config.ModelName;
+
+    string fieldName = config.FieldName;
+    //string fieldName = ViewData.TemplateInfo.GetFullHtmlFieldId(string.Empty);
+    string fieldId = config.FieldId;
+
+    //Default name for forms
+    string FormEntityModel = config.Form;
+    string TemplateName = modelName + fieldName + ".html";
+
+
+}
+<div class="form-group @ViewData["cssclass"] @(!ViewData.ModelMetadata.IsRequired ? "" : "has-feedback")" ng-class="{ 'has-error': @FormEntityModel.$invalid && @FormEntityModel.$touched, 'has-success': @FormEntityModel.$valid && @FormEntityModel.$touched }">
+    <label for="@fieldId">
+        @ViewData.ModelMetadata.DisplayName
+    @if (ViewData.ModelMetadata.IsRequired)
+    {
+        <span style="color:red;">*</span>
+    }
+</label>
+<div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+    <input class="form-control"
+           ng-class="{ 'has-error': @FormEntityModel.$invalid && @FormEntityModel.$touched, 'has-success': @FormEntityModel.$valid && @FormEntityModel.$touched  }"
+           id="@fieldId"
+           name="@fieldName"
+           ng-model="@fieldId"
+           model-view-value="true"
+           uib-datepicker-popup="dd/MM/yyyy"
+           @*ui-mask="99/99/9999"*@
+           is-open="@(fieldName).opened"
+           @Html.Raw(config.DatePickerOptions)
+           @Html.Raw(config.NgChange)
+           close-text="Fechar"
+           @Html.Raw(config.NgRequired)
+           current-text="Hoje"
+           clear-text="Limpar"
+           is-date-validator             
+           @Html.Raw(config.MaxDateValidator)
+           ng-init="@fieldId=@("'" + ViewData.Model + "'")"
+           type="datetime"
+           ng-mouseleave="@FormEntityModel.$MouseOver = false"
+           ng-mouseover="@FormEntityModel.$MouseOver = true"
+           value="@ViewData.Model"
+           @(ViewData.ModelMetadata.IsRequired ? "required" : "")
+
+           @*ng-focus="@(fieldName).opened = !@(fieldName).opened; @FormEntityModel.$Focus = true"*@
+           ng-blur="@FormEntityModel.$Focus = false" />
+    <span style="right: 40px;" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="!@FormEntityModel.$pending && @FormEntityModel.$valid && @FormEntityModel.$touched"></span>
+    <span style="right: 40px;" class="glyphicon glyphicon-info-sign form-control-feedback" aria-hidden="true" ng-show="!@FormEntityModel.$pending && @FormEntityModel.$invalid && @FormEntityModel.$touched"></span>
+    <span style="right: 40px;" class="glyphicon glyphicon-refresh form-control-feedback" aria-hidden="true" ng-show="@FormEntityModel.$pending && @FormEntityModel.$touched"></span>
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="@(fieldName).opened = !@(fieldName).opened"><i class="glyphicon glyphicon-calendar"></i></button>
+    </span>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 popoverMessageValidator" ng-show="@FormEntityModel.$touched  && @FormEntityModel.$MouseOver && @FormEntityModel.$invalid">
+    <div ng-class="{'popover bottom': !isMobile }" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="arrow"></div>
+        @*ToDo: Implementar diversos tipos de validação.*@
+        <div ng-class="{'popover-content': !isMobile }">
+            <div ng-messages="@FormEntityModel.$error" style="color:maroon" role="alert">
+                <div class="alert alert-danger" role="alert" ng-message="required"><i class="glyphicon glyphicon-info-sign"></i> Campo Obrigatório</div>
+                <div class="alert alert-danger" role="alert" ng-message="isDateValidator"><i class="glyphicon glyphicon-info-sign"></i> Data inválida</div>                
+                <div class="alert alert-danger" role="alert" ng-message="date"><i class="glyphicon glyphicon-info-sign"></i> Data inválida</div>
+                <div class="alert alert-danger" role="alert" ng-message="maxDateValidator"><i class="glyphicon glyphicon-info-sign"></i> Data limite ultrapassada (@config.MaxDate)</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

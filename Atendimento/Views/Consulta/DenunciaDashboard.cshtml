@@ -1,0 +1,114 @@
+﻿
+<section ng-controller="ctrlConsultarMacro">
+    
+        <style>
+            .text-info {
+                font-size: 20px !important;
+                /*color: #fff !important;*/
+            }
+            .panel-body {
+                font-size: 22px !important;
+                text-align:center;
+            }            
+            .panel-heading{
+                font-size: 25px !important;
+                text-align:center;
+                /*background:#336699 !important;*/
+                
+            }          
+            .info_denuncia_header{
+                text-align:center;
+                /*color: #336699 !important;*/
+            }
+        </style>
+        
+        <section>
+
+            <div class="container">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
+                    <h3><b>DASHBOARD DENÚNCIA</b></h3>
+                </div>
+                <div style="margin:25px">
+                    <h2 class="info_denuncia_header">Total Denúncias: {{denuncia.denunciasTotal}}</h2>
+                </div>
+                <div>                    
+                    <div class="col-lg-6">
+                       
+                        <div class="panel panel-default">                            
+                            <div class="panel-heading"><b class="text-info">Polícia Militar</b></div>                           
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><b class="text-info">Polícia Civil</b></div>
+                        </div>
+                    </div>
+                                       
+                    <div class="col-lg-3">
+                        <div class="panel panel-default">
+                            @*" style="margin:5px; border:2px solid #cfcfcf; border-radius: 8px; box-shadow: 0px 5px 10px #808080">*@
+                            <div class="panel-heading"><b class="text-info">Aguardando Análise</b></div>
+                            <div class="panel-body">{{denuncia.denunciasPMAguardando}}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="panel panel-default">
+                            @*" style="margin:5px; border:2px solid #cfcfcf; border-radius: 8px; box-shadow: 0px 5px 10px #808080">*@
+                            <div class="panel-heading"><b class="text-info">Em Análise</b></div>
+                            <div class="panel-body">{{denuncia.denunciasEmAnalisePM}}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="panel panel-default">
+                            @*" style="margin:5px; border:2px solid #cfcfcf; border-radius: 8px; box-shadow: 0px 5px 10px #808080">*@
+                            <div class="panel-heading"><b class="text-info">Aguardando Análise</b></div>
+                            <div class="panel-body">{{denuncia.denunciasPCAguardando}}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="panel panel-default">
+                            @*" style="margin:5px; border:2px solid #cfcfcf; border-radius: 8px; box-shadow: 0px 5px 10px #808080">*@
+                            <div class="panel-heading"><b class="text-info">Em Análise</b></div>
+                            <div class="panel-body">{{denuncia.denunciasEmAnalisePC}}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="panel panel-default" style="height: 150px;">
+                            @*" style="margin:5px; border:2px solid #cfcfcf; border-radius: 8px; box-shadow: 0px 5px 10px #808080">*@
+                            <div class="panel-heading"><b class="text-info">Descartadas</b></div>
+                            <div class="panel-body">{{denuncia.denunciasDescatardasPM}}</div>
+                            <div class="panel-body"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="panel panel-default" style="height: 150px;">
+                            @*" style="margin:5px; border:2px solid #cfcfcf; border-radius: 8px; box-shadow: 0px 5px 10px #808080">*@
+                            <div class="panel-heading"><b class="text-info">Finalizadas</b></div>
+                            <div class="panel-body" style="text-align:center"><b>Com Resultado: </b>{{denuncia.denunciasFinalizadasPositivaPM}} <p><b>Sem Resultado: </b> {{denuncia.denunciasFinalizadasNegativaPM}}</p></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="panel panel-default" style="height: 150px;">
+                            @*" style="margin:5px; border:2px solid #cfcfcf; border-radius: 8px; box-shadow: 0px 5px 10px #808080">*@
+                            <div class="panel-heading"><b class="text-info">Descartadas</b></div>
+                            <div class="panel-body">{{denuncia.denunciasDescatardasPC}}</div>
+                            <div class="panel-body"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="panel panel-default" style="height: 150px;">
+                            @*" style="margin:5px; border:2px solid #cfcfcf; border-radius: 8px; box-shadow: 0px 5px 10px #808080">*@
+                            <div class="panel-heading"><b class="text-info">Finalizadas</b></div>
+                            <div class="panel-body" style="text-align:center"><b>Com Resultado: </b>{{denuncia.denunciasFinalizadasPositivaPC}} <p><b>Sem Resultado: </b> {{denuncia.denunciasFinalizadasNegativaPC}}</p></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+</section>
+<script type="text/javascript" src="~/App/Consulta/ctrlDenunciaDashboard.js"></script>

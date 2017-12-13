@@ -1,0 +1,24 @@
+﻿@model WebDenunciaSSP.Atendimento.Models.RegistroUsuarioViewModel
+
+<section ng-controller="LoginFormController">
+
+    <hr />
+    @using (Html.BeginForm("", "", FormMethod.Post, new { name = @ViewData.ModelMetadata.ModelType.Name + "Form", role = "form" }))
+    {
+        @Html.CustomEditorFor(x => x.usuarioLogin, new { cssclass = "col-lg-4 col-md-4 col-sm-6 col-xs-12 col-md-offset-4 col-lg-offset-4 col-sm-offset-3" })
+        <div class="clearfix"></div>
+        @Html.CustomEditorFor(x => x.Senha, new { cssclass = "col-lg-4 col-md-4 col-sm-6 col-xs-12 col-md-offset-4 col-lg-offset-4 col-sm-offset-3" })
+        
+        <div class="col-md-12 text-center" style="margin-top: 20px; margin-bottom: 20px;">
+            <button class="btn btn-lg btn-success" type="button" ng-click="Logar()" ng-disabled=" @(ViewData.ModelMetadata.ModelType.Name + "Form").$invalid">
+                <i style="vertical-align: middle;" class="fa fa-check-circle-o"></i>
+                <span> Logar </span>
+            </button>
+        </div>
+
+        <br />   <br />
+
+    }
+</section>
+
+<script type="text/javascript" src="~/App/Usuario/LoginFormController.js"></script>

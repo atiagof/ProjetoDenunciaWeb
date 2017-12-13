@@ -1,0 +1,54 @@
+﻿@model bool?
+@using WebDenunciaSSP.CommonLibs.Helper
+@{
+
+    EditorTemplateConfiguration config = new EditorTemplateConfiguration(ViewData);
+    string modelName = ViewData.ModelMetadata.ContainerType.Name;
+    string fieldName = ViewData.TemplateInfo.GetFullHtmlFieldId(string.Empty);
+    string fieldId = modelName + (string.IsNullOrEmpty(modelName) ? "" : ".") + fieldName;
+
+    //Default name for forms
+    string FormEntityModel = modelName + "Form." + fieldName;
+    string TemplateName = modelName + fieldName + ".html";
+}
+<div class="form-group @ViewData["cssclass"] @(!ViewData.ModelMetadata.IsRequired ? "" : " has-feedback ")" ng-class="{ @(!ViewData.ModelMetadata.IsRequired ? "" : string.Format("'has-error': {0}.$invalid && {0}.$touched, 'has-success': {0}.$valid && @FormEntityModel.$touched", FormEntityModel)) }">
+    <div class="checkbox">
+        
+            <input bs-switch 
+                   switch-on-text="@config.GetAdditionalMetadata("value1")"
+                   switch-off-text="@config.GetAdditionalMetadata("value2")"
+                   switch-on-color="success"
+                   switch-off-color="warning"
+                   switch-label-width="0"
+                   switch-handle-width="@config.GetAdditionalMetadata("width")"
+                   @*switch-size="mini"*@
+                   type="checkbox"
+                   ng-true-value="true"
+                   ng-false-value="false"
+                   switch-change="TipoUsuarioChanged()"
+                   id="@fieldId"
+                   name="@fieldName"
+                   ng-model="@fieldId"
+                   ng-init="@fieldId=@(ViewData.Model.HasValue && ViewData.Model.Value? "false" : "true")"
+                   type="checkbox"
+                   @(ViewData.ModelMetadata.IsRequired ? "required" : "") />
+            @*@ViewData.ModelMetadata.DisplayName*@
+            @*@if (ViewData.ModelMetadata.IsRequired)
+            {
+                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="!@FormEntityModel.$pending && @FormEntityModel.$valid && @FormEntityModel.$touched"></span>
+                <span class="glyphicon glyphicon-info-sign form-control-feedback" aria-hidden="true" ng-show="!@FormEntityModel.$pending && @FormEntityModel.$invalid && @FormEntityModel.$touched"></span>
+                <span class="glyphicon glyphicon-refresh form-control-feedback" aria-hidden="true" ng-show="@FormEntityModel.$pending && @FormEntityModel.$touched"></span>
+            }*@        
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 popoverMessageValidator" ng-show="@FormEntityModel.$touched  && (isMobile || @FormEntityModel.$Focus) && @FormEntityModel.$invalid">
+        <div ng-class="{'popover bottom': !isMobile }" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="arrow"></div>
+            @*ToDo: Implementar diversos tipos de validação.*@
+            <div ng-class="{'popover-content': !isMobile }">
+                <div ng-messages="@FormEntityModel.$error" style="color:maroon" role="alert">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><i class="glyphicon glyphicon-info-sign"></i> Campo Obrigatório</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

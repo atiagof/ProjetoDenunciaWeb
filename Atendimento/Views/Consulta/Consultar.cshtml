@@ -1,0 +1,202 @@
+﻿@model WebDenunciaSSP.Atendimento.Models.ConsultaViewModel
+
+<section ng-controller="ctrlConsulta" ng-form="ConsultaViewModelForm">
+    <input type="hidden" ng-model="EntityName" ng-init="EntityName = 'DenunciaConsultaModel'" />
+    <input type="hidden" ng-model="ModelName" ng-init="ModelName = 'DenunciaConsultaModel'" />
+    @* Título *@
+    <div class="col-md-12">
+        <h2>Consultar Denúncia</h2>
+        <hr />
+    </div>
+    @* Pesquisa por Protocolo *@
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <a class="" role="button" data-toggle="collapse" href="#pesqProtocolo" aria-expanded="false" aria-controls="pesqProtocolo">
+            <h3 class="info_header">
+                <i class="fa fa-caret-right iconProtocolo"></i>
+                <span> Pesquisa por Protocolo</span>
+            </h3>
+        </a>
+        <div class="row collapse" id="pesqProtocolo">
+            <div class="container">
+                <div class="clearfix"></div>
+                    @Html.CustomEditorFor(x => x.NumeroProtocolo, new { cssclass = "col-lg-3 col-md-3 col-sm-3 col-xs-3" })
+
+                <button class="btn btn-lg btn-success" ng-click="carregar()">
+                    <img src="~/images/icones/icone_pata.svg" style="height:30px;" />
+                    <span> Pesquisar </span>
+                </button>
+                </div>
+            </div>
+    </div>
+
+    @* Pesquisa avançada *@
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+        <a class="" role="button" data-toggle="collapse" href="#pesqAvancada" aria-expanded="false" aria-controls="pesqAvancada">
+            <h3 class="info_header">
+                <i class="fa fa-caret-right iconAvancada"></i>
+                <span> Pesquisa Avançada</span>
+            </h3>
+        </a>
+
+        <div class="row collapse" id="pesqAvancada">
+            <div class="container">
+                <div class="clearfix"></div>
+                @if (HttpContext.Current.User.IsInRole("Administrador"))
+                {
+                    @Html.CustomEditorFor(x => x.OrgaoIdTipo, new { cssclass = "col-md-3" })
+                }
+
+                <div class="clearfix"></div>
+                @Html.CustomEditorFor(x => x.DataCadastroInicial, new
+           {
+               cssclass = "col-md-3 col-lg-3",
+               datepicker_options = "{showWeeks:false, maxDate: DataMaxima}",
+               max_date_validator = "{ 'maxDate':'" + DateTime.Now.ToString("dd/MM/yyyy") + "'}",
+               max_date = DateTime.Now.ToString("dd/MM/yyyy"),
+               ng_required = "(ConsultaViewModel.DataCadastroFinal == '' || ConsultaViewModel.DataCadastroFinal == null) && (ConsultaViewModel.DataEncaminhamentoInicial == '' || ConsultaViewModel.DataEncaminhamentoInicial == null) && (ConsultaViewModel.DataEncaminhamentoFinal == '' || ConsultaViewModel.DataEncaminhamentoFinal == null)"
+           })
+                @Html.CustomEditorFor(x => x.DataCadastroFinal, new
+           {
+               cssclass = "col-md-3 col-lg-3",
+               datepicker_options = "{showWeeks:false, maxDate: DataMaxima}",
+               max_date_validator = "{ 'maxDate':'" + DateTime.Now.ToString("dd/MM/yyyy") + "'}",
+               max_date = DateTime.Now.ToString("dd/MM/yyyy"),
+               ng_required = "(ConsultaViewModel.DataCadastroInicial == '' || ConsultaViewModel.DataCadastroInicial == null) && (ConsultaViewModel.DataEncaminhamentoInicial == '' || ConsultaViewModel.DataEncaminhamentoInicial == null) && (ConsultaViewModel.DataEncaminhamentoFinal == '' || ConsultaViewModel.DataEncaminhamentoFinal == null)"
+           })
+
+                <div class="clearfix"></div>
+                @Html.CustomEditorFor(x => x.CpfDenunciante, new { cssclass = "col-md-3 col-lg-3" })
+
+                <div class="clearfix"></div>
+                @if (HttpContext.Current.User.IsInRole("Administrador"))
+                {
+                    @Html.CustomEditorFor(x => x.SituacaoId, new { cssclass = "col-md-3 col-lg-3" })
+                }
+
+                    <div class="col-lg-3 col-md-3" ng-show="ConsultaViewModel.SituacaoId == '8'">
+                        <label>&nbsp;</label>
+
+                        <select name="selFinalizada" ng-model="finalizada" class="form-control col-md-3 col-lg-3">
+                            <option value="1">Todas</option>
+                            <option value="2">Finalizada sem resultado</option>
+                            <option value="3">Finalizada com resultado</option>
+                        </select>
+                    </div>
+
+                <div class="clearfix"></div>
+                @Html.CustomEditorFor(x => x.TipoCrimeId, new { cssclass = "col-md-3 col-lg-3" })
+                
+                <div ng-show="ConsultaViewModel.TipoCrimeId == '6'">
+                    @Html.CustomEditorFor(x => x.DescricaoTipoCrime, new { cssclass = "col-md-3 col-lg-3" })
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <h4 class="info_denuncia_header">Encaminhamento</h4>
+                </div>
+                <div class="clearfix"></div>
+                @Html.CustomEditorFor(x => x.DataEncaminhamentoInicial, new
+            {
+               cssclass = "col-md-3 col-lg-3",
+               datepicker_options = "{showWeeks:false, maxDate: DataMaxima}",
+               max_date_validator = "{ 'maxDate':'" + DateTime.Now.ToString("dd/MM/yyyy") + "'}",
+               max_date = DateTime.Now.ToString("dd/MM/yyyy"),
+               ng_required = "(ConsultaViewModel.DataEncaminhamentoFinal == '' || ConsultaViewModel.DataEncaminhamentoFinal == null) && (ConsultaViewModel.DataCadastroInicial == '' || ConsultaViewModel.DataCadastroInicial == null) && (ConsultaViewModel.DataCadastroFinal == '' || ConsultaViewModel.DataCadastroFinal == null)"
+           })
+                @Html.CustomEditorFor(x => x.DataEncaminhamentoFinal, new
+           {
+               cssclass = "col-md-3 col-lg-3",
+               datepicker_options = "{showWeeks:false, maxDate: DataMaxima}",
+               max_date_validator = "{ 'maxDate':'" + DateTime.Now.ToString("dd/MM/yyyy") + "'}",
+               max_date = DateTime.Now.ToString("dd/MM/yyyy"),
+               ng_required = "(ConsultaViewModel.DataEncaminhamentoInicial == '' || ConsultaViewModel.DataEncaminhamentoInicial == null) && (ConsultaViewModel.DataCadastroInicial == '' || ConsultaViewModel.DataCadastroInicial == null) && (ConsultaViewModel.DataCadastroFinal == '' || ConsultaViewModel.DataCadastroFinal == null)"
+           })
+                <div class="clearfix"></div>
+                
+                @Html.CustomEditorFor(x => x.UnidadeId, new { cssclass = "col-md-3 col-lg-3" })
+
+                <div class="clearfix"></div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="form-group">
+                        <label>A expirar em</label>
+                        
+                        <select name="selExpirar" ng-model="expirar" class="form-control col-md-3 col-lg-3" >
+                            <option value="" selected="selected">Selecione...</option>
+                            <option value="5">5 dias</option>
+                            <option value="10">10 dias</option>
+                            <option value="11">Expirado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center; margin-bottom: 20px;">
+                    <button class="btn btn-lg btn-primary" ng-click="limparDados()">
+                        <img src="~/images/icones/icone_pata.svg" style="height:30px;" />
+                        <span> Limpar</span>
+                    </button>
+                    <button class="btn btn-lg btn-success" ng-click="pesquisarDenuncia()">
+                        <img src="~/images/icones/icone_pata.svg" style="height:30px;" />
+                        <span> Pesquisar</span>
+                    </button>
+                </div>
+            </div>
+            <div class="container" style="margin-bottom: 20px;" ng-if="gridOptions.data.length > 0">
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h3>Lista de denúncias filtradas:</h3>
+
+                </div>
+                <div class="col-md-02 col-lg-02 col-sm-02 col-xs-02 text-right">
+                    <button type="button" class="btn btn-success fa fa-2x fa-file-excel-o pull-right" ng-click="exportarExcel()" title="Excel"></button>
+                    @*<button type="button" class="btn btn-danger fa fa-2x fa-file-pdf-o pull-right" ng-click="exportarPDF()" title="PDF" ></button>*@
+                    <button type="button" class="btn btn-danger fa fa-2x fa-file-pdf-o pull-right" ng-click="exportaPDF()" title="PDF"></button>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div style="min-height: 450px; width: 100%;"
+                         ui-grid="gridOptions"
+                         ui-grid-autoResize
+                         ui-grid-resize-columns
+                         ui-grid-pinning
+                         ui-grid-move-columns
+                         ui-grid-selection 
+                         ui-grid-exporter>
+                    </div>
+                </div>
+                <div class="hidden">
+                    <div style="min-height: 450px; width: 100%;"
+                         ui-grid="gridExport"
+                         ui-grid-autoResize
+                         ui-grid-resize-columns
+                         ui-grid-pinning
+                         ui-grid-move-columns
+                         ui-grid-selection
+                         ui-grid-exporter>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <input type="button" value="Primeira" class="btn" ng-disabled="SelectedPage == 1" ng-click="FirstPage()" />
+                        <input type="button" value="Anterior" class="btn" ng-disabled="SelectedPage == 1" ng-click="PreviousPage()" /> Página:
+                        <input type="text" value="1" style="width:3em;" ng-model="GoToPageValue" /> de {{TotalPages}} ({{TotalResults}} registros)
+                        <input type="button" value="Ir" class="btn" ng-click="GoToPage()" />
+                        <input type="button" value="Próxima" class="btn" ng-click="NextPage()" ng-disabled="SelectedPage >= TotalPages" />
+                        <input type="button" value="Última" class="btn" ng-click="LastPage()" ng-disabled="SelectedPage >= TotalPages" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="~/App/Consulta/ctrlConsultar.js"></script>
+
+<script type="text/javascript">
+    collapseEvent('#pesqProtocolo', '.iconProtocolo');
+    collapseEvent('#pesqAvancada', '.iconAvancada');
+</script>

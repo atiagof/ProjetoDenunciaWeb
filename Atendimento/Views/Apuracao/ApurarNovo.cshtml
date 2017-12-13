@@ -1,0 +1,48 @@
+﻿
+<section ng-controller="ctrlApurarNovo">
+    <input type="hidden" ng-model="EntityName" ng-init="EntityName = 'DenunciaApuracaoModel'" />
+    <input type="hidden" ng-model="ModelName" ng-init="ModelName = 'DenunciaApuracaoModel'" />
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
+        <h3>APURAÇÃO</h3>
+    </div>
+
+    @*<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center; margin-bottom: 20px;" ng-if="listaApuracao == null">
+        <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+        <span style="font-size: 35px;">Carregando lista...</span>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 20px;" ng-if="listaApuracao.length <= 0">
+        <h3>Não há denúncias para serem analisadas.</h3>
+    </div>*@
+    <div class="clearfix"></div>
+    <section class="container" style="margin-bottom: 20px;">
+
+        @*<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <h3>Lista de denúncias para serem analisadas:</h3>
+        </div>*@
+        <div class="row">
+            <div style="min-height: 450px;width: 100%;" 
+                 ui-grid="gridOptions"
+                 ui-grid-autoResize
+                 ui-grid-resize-columns
+                 ui-grid-pinning
+                 ui-grid-move-columns
+                 ui-grid-selection>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <input type="button" value="Primeira" class="btn" ng-disabled="SelectedPage == 1" ng-click="FirstPage()" />
+                <input type="button" value="Anterior" class="btn" ng-disabled="SelectedPage == 1" ng-click="PreviousPage()" /> Página:
+                <input type="text" value="1" style="width:3em;" ng-model="GoToPageValue" /> de {{TotalPages}} ({{TotalResults}} registros)
+                <input type="button" value="Ir" class="btn" ng-click="GoToPage()" />
+                <input type="button" value="Próxima" class="btn" ng-click="NextPage()" ng-disabled="SelectedPage >= TotalPages" />
+                <input type="button" value="Última" class="btn" ng-click="LastPage()" ng-disabled="SelectedPage >= TotalPages" />
+            </div>
+        </div>
+
+    </section>
+
+</section>
+
+<script type="text/javascript" src="~/App/Apuracao/ctrlApurarNovo.js"></script>

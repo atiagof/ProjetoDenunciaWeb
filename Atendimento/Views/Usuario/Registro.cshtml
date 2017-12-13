@@ -1,0 +1,98 @@
+﻿@model WebDenunciaSSP.Atendimento.Models.RegistroUsuarioViewModel
+
+<style >
+/* Styles go here */
+
+.tree-view-wrapper, .tree-view-wrapper ul { list-style:none;}
+.show-hide, .edit{cursor:pointer;}
+.tree-checkbox{margin: 6px !important;}
+.edit{margin-right: 6px !important;}
+.edit i {color: #D77105;}
+.hide{display:none;}
+.show{display:block;}
+
+</style>
+
+<div class="col-md-10" style="margin:auto; float:unset;" ng-controller="RegistroFormController" block-ui="blockUI">
+
+    <h2>Cadastro Usuário</h2>
+    <hr />
+
+    @using (Html.BeginForm("", "", FormMethod.Post, new { name = @ViewData.ModelMetadata.ModelType.Name + "Form", role = "form" }))
+    {
+
+        @Html.CustomEditorFor(x => x.usuarioID, new { cssclass = "col-md-6" })
+
+        @*<div ng-show="RegistroUsuarioViewModel.usuarioID == 0 || RegistroUsuarioViewModel.usuarioID == undefined ">
+            @Html.CustomSwitchEditorFor(x => x.TipoUsuario, new { cssclass = "col-md-10" }, "Atendente", "Unidade Policial", 200)
+        </div>*@
+
+        <div class="clearfix"></div>
+        <div class="clearfix"></div>
+
+        if (Model.usuarioID == 0)
+        {
+            @Html.CustomEditorFor(x => x.usuarioLogin, new { cssclass = "col-md-6"})
+        }
+        else
+        {
+            @Html.CustomEditorFor(x => x.usuarioLogin, new { cssclass = "col-md-6", @readonly = "readonly" })
+        }
+
+        <div class="clearfix"></div>
+        @Html.CustomEditorFor(x => x.usuarioNome, new { cssclass = "col-md-6"})
+
+        <div class="clearfix"></div>
+        @Html.CustomEditorFor(x => x.usuarioEmail, new { cssclass = "col-md-6" })
+
+
+        @*<div ng-show="RegistroUsuarioViewModel.TipoUsuario == true">*@
+
+        <div class="clearfix"></div>
+        @Html.CustomEditorFor(x => x.usuarioCPF, new { cssclass = "col-md-6" })
+
+        <div class="clearfix"></div>
+        @Html.CustomEditorFor(x => x.usuarioRG, new { cssclass = "col-md-4"})
+        @Html.CustomEditorFor(x => x.usuarioRG_UF, new { cssclass = "col-md-2", ui_mask = "AA" })
+
+        @*</div>*@
+
+        <div class="clearfix"></div>
+        @Html.CustomEditorFor(x => x.GrupoId, new { cssclass = "col-md-2", ng_change = "GrupoIdChanged()" })
+            
+        <div ng-show="RegistroUsuarioViewModel.GrupoId == 6 || RegistroUsuarioViewModel.GrupoId == 7  "  >
+
+            <div class="clearfix"></div>
+                      
+            @*@Html.CustomEditorFor(x => x.OrgaoIdTipo, new { cssclass = "col-md-2" })*@
+
+            @*@Html.CustomEditorFor(x => x.OrgaoId, new { cssclass = "col-md-1" })*@
+
+            <div class="clearfix"></div>
+
+            <div class="form-group col-md-4">
+                <label for="RegistroUsuarioViewModel.OrgaoId">Unidade policial <span style="color:red;">*</span></label>
+                <div style="border:groove; height: 400px;  overflow: auto;">
+                    <tree-view selected-node="selectedNode" sel-orgaos="selOrgaos" checkbox click="myClick(node)" model="nodes" ></tree-view>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="clearfix"></div>
+
+        <div class="col-md-11 text-center">
+            <button class="btn btn-lg btn-success" type="button" ng-click="save()" @*ng-disabled=" @(ViewData.ModelMetadata.ModelType.Name + "Form").$invalid"*@ >
+                <i style="vertical-align: middle;" class="fa fa-check-circle-o"></i>
+                <span> Salvar </span>
+            </button>
+            <br /><br />
+
+        </div>
+    }
+
+</div>
+
+<script type="text/javascript" src="~/App/Usuario/RegistroFormController.js"></script>
+@*<script src="~/App/Usuario/RegistroTreeFormController.js"></script>*@

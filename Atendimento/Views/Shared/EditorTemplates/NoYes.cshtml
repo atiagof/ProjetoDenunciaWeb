@@ -1,0 +1,34 @@
+﻿@model System.Boolean?
+
+@{
+    string ViewModelName = ViewData["ViewModelName"] != null ? (string)ViewData["ViewModelName"] : "";
+    string fieldName = ViewData.TemplateInfo.GetFullHtmlFieldId(string.Empty);
+    string fieldId = ViewModelName + (string.IsNullOrEmpty(ViewModelName) ? "" : ".") + fieldName;
+
+    string FormEntityModel = ViewData["FormName"] + "." + fieldName;
+}
+<div class="form-group has-feedback" ng-class="{ 'has-error': @FormEntityModel.$invalid && @FormEntityModel.$touched, 'has-success': @FormEntityModel.$valid && @FormEntityModel.$touched }">
+        <label for="@fieldId">
+            @ViewData.ModelMetadata.DisplayName
+        </label>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <input ng-class="{ 'has-error': @FormEntityModel.$invalid && @FormEntityModel.$touched, 'has-success': @FormEntityModel.$valid && @FormEntityModel.$touched  }"
+                   class="form-control"
+                   id="@fieldId"
+                   name="@fieldName"
+                   ng-model="@fieldId"
+                   type="checkbox"
+                   @*checked="@((Model.HasValue && Model.Value)? "true": "false")"*@                   
+                   data-on-text="Sim"
+                   data-on-color="success"
+                   data-off-text="Não"
+                   data-off-color="danger"
+                   @(ViewData.ModelMetadata.IsRequired ? "required" : "")
+                   @ViewData["Attr"] />
+        </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("[name='@fieldName']").bootstrapSwitch();
+    });
+</script>
